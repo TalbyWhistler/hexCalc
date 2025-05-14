@@ -1,6 +1,13 @@
 
+// change this based on the name of the output area 
+let NAME_OF_OUTPUT_ZONE = "outputArea";
 
-
+//      BUTTON HANDLERS     //
+/**
+ * Function to handle the pressing of the hex calculator keypad
+ * @param {integer function code that tells which button was pressed} button 
+ * @returns void
+ */
 function handle_hexCalcButton(button)
 {
     valueString='0123456789abcdef'   
@@ -25,6 +32,12 @@ function handle_hexCalcButton(button)
     }
 }
 
+/**
+ * Handles the pressing of the decimal keypad buttons
+ * @param {button code} button 
+ * @returns 
+ */
+
 function handle_decCalcButton(button)
 {
     existingContent=document.getElementById("displayBandDecimal").innerText;
@@ -47,6 +60,10 @@ function handle_decCalcButton(button)
     
 }
 
+/**
+ * Handles the operator buttons on thebottom
+ * @param {button code} button 
+ */
 function handle_operationsButton(button)
 {
     console.log("An operations button has been pressed the function code was " + button);
@@ -73,6 +90,10 @@ function handle_operationsButton(button)
 }
 
 
+//  OPERATOR BUTTON FUNCTIONS // 
+/**
+ * The add operator function
+ */
 function addFunction()
 {
     hexContent = document.getElementById("displayBandHex").innerText;
@@ -87,6 +108,9 @@ function addFunction()
     displayHexCalculator(sumHex);
 }
 
+/**
+ * Hex subtract decimal operator function
+ */
 function hSubDFunction()
 {
     hexContent = document.getElementById("displayBandHex").innerText;
@@ -101,6 +125,9 @@ function hSubDFunction()
     displayHexCalculator(resultHex);
 }
 
+/**
+ * Dec subtract hex operator function
+ */
 function dSubHFunction()
 {
     hexContent = document.getElementById("displayBandHex").innerText;
@@ -115,6 +142,9 @@ function dSubHFunction()
     displayHexCalculator(resultHex);
 }
 
+/**
+ * Multiplication operator function
+ */
 function multFunction()
 {
     hexContent = document.getElementById("displayBandHex").innerText;
@@ -127,11 +157,11 @@ function multFunction()
     resultHex = convertDecimalToHex(resultDec);
     displayDecCalculator(resultDec);
     displayHexCalculator(resultHex);
-
 }
 
 
 
+// DISPLAY AND CLEAR FUNCTIONS  //
 function displayDecCalculator(newValue)
 {
     document.getElementById("displayBandDecimal").innerHTML='<p>' + newValue + '</p>';
@@ -163,6 +193,7 @@ function clearDecBandDisplay()
     document.getElementById("displayBandDecimal").innerHTML="<p>0</p>";
 }
 
+//      HEX DEX CONVERTERS    // 
 function convertDecimalToHex(inputDecimal)
 {
     if (inputDecimal < 0 || inputDecimal > 65536 )
@@ -240,9 +271,6 @@ function convertHexToDecimal(inputHex)
         {
             return -1;
         }
-
-        
-
         cycleCounter=inputHex.length;
         console.log("Cycle counter is " + cycleCounter);
         totalTally = 0;
@@ -268,36 +296,22 @@ function convertHexToDecimal(inputHex)
             cycleCounter--;
             console.log("Cycle counter is now " + cycleCounter);
         }
-
         return totalTally;
-
     }
 
-
+//      INTEGRATED CALULATOR OBJECT             //
 function integratedCalculator()
 {
-    //  internal calculator functions
-    
-    
-
-
-    
-// sets both calculator display values to 0
-
-
      function outputToPage(content)
     {
-        document.getElementById("outputArea").innerHTML=content;
+        document.getElementById(NAME_OF_OUTPUT_ZONE).innerHTML=content;
     }
-
-    // button handlers 
     
-
     // components 
 
     function displayBandDecimal()
     {
-        functionContent="<div class=\"container\ bg-black text-white\ text-end\" id='displayBandDecimal'>";
+        functionContent="<div class=\"container\ bg-black text-white\ fs-3 text-end\" id='displayBandDecimal'>";
         functionContent+="0";
         functionContent+="</div>";
         return functionContent;
@@ -306,7 +320,7 @@ function integratedCalculator()
 
     function displayBandHex()
     {
-        functionContent="<div class=\"container\ bg-success text-warning\ text-end\" id='displayBandHex'>";    
+        functionContent="<div class=\"container\ bg-warning text-black\ fs-3 text-end\" id='displayBandHex'>";    
         functionContent+="0";
         functionContent+="</div>";
         return functionContent;
@@ -314,17 +328,16 @@ function integratedCalculator()
 
     function hexButton(buttonText,functionInteger)
     {
-        functionContent="<div class='col-3'>";
-        functionContent+="<div class='button text-center bg-warning text-black mx-0 px-0 w-100' id='hexButton' onclick='handle_hexCalcButton(" + functionInteger + ")'>" + buttonText + "</div>";
+        functionContent="<div class='col-3 mx-0 px-0'>";
+        functionContent+="<div class='button border border-black text-center bg-warning text-black mx-0 px-0 w-100 fs-3' id='hexButton' onclick='handle_hexCalcButton(" + functionInteger + ")'>" + buttonText + "</div>";
         functionContent+="</div>";
         return functionContent;
-
     }
 
     function decimalButton(buttonText,functionInteger)
     {
-        functionContent="<div class='col-4'>";
-        functionContent+="<div class='button text-center bg-dark text-white border border-white' id='decButton' onclick='handle_decCalcButton(" + functionInteger + ")'>" + buttonText + "</div>";
+        functionContent="<div class='col-4 mx-0 px-0'>";
+        functionContent+="<div class='button text-center bg-dark text-white border border-white fs-3' id='decButton' onclick='handle_decCalcButton(" + functionInteger + ")'>" + buttonText + "</div>";
         functionContent+="</div>";
         return functionContent;
     }
@@ -341,8 +354,6 @@ function integratedCalculator()
         functionContent+=hexButton('d',13);
         functionContent+=hexButton('e',14);
         functionContent+=hexButton('f',15);
-
-
         functionContent+="</div>"; // end of row
 
         // row 1
@@ -351,13 +362,10 @@ function integratedCalculator()
         functionContent+=hexButton('9',9);
         functionContent+=hexButton('a',10);
         functionContent+=hexButton('b',11);
-
-
         functionContent+="</div>"; // end of row
 
         // row 2
         functionContent+="<div class='row'>";
-
         functionContent+=hexButton('4',4);
         functionContent+=hexButton('5',5);
         functionContent+=hexButton('6',6);
@@ -367,70 +375,50 @@ function integratedCalculator()
 
         // row 3
         functionContent+="<div class='row'>";
-
         functionContent+=hexButton('0',0);
         functionContent+=hexButton('1',1);
         functionContent+=hexButton('2',2);
         functionContent+=hexButton('3',3);
-
-
         functionContent+="</div>"; // end of row
-
         functionContent+="<div class='row'>";
-
-        
         functionContent+=hexButton('CLEAR',-3);
-        
-
-
         functionContent+="</div>"; // end of row
-
         functionContent+="</div>"; // end of container
         return functionContent;
-
     }
 
     function decimalKeyPad()
     {
         functionContent="<div class='container border border-black'>"
-        
         functionContent+="<p>Decimal Keypad</p>";
-
         functionContent+="<div class='row'>";
         // row#0
     
         functionContent+=decimalButton('7',7);
         functionContent+=decimalButton('8',8);
         functionContent+=decimalButton('9',9);
-
         functionContent+="</div>";
-
         functionContent+="<div class='row'>";
         // row#1
         functionContent+=decimalButton('4',4);
         functionContent+=decimalButton('5',5);
         functionContent+=decimalButton('6',6);
         functionContent+="</div>";
-
         functionContent+="<div class='row'>";
         // row#2
         functionContent+=decimalButton('1',1);
         functionContent+=decimalButton('2',2);
-        functionContent+=decimalButton('3',3);
-        
+        functionContent+=decimalButton('3',3);     
         functionContent+="</div>";
-
         functionContent+="<div class='row'>";
         // row#3
         
         functionContent+=decimalButton('0',0);
         functionContent+=decimalButton('CLEAR',-3);
-
         functionContent+="</div>";
         functionContent+="<div class='row'>";
         // row #4
         
-    
         functionContent+="</div>"
         functionContent+="</div>";
         return functionContent;
@@ -438,26 +426,18 @@ function integratedCalculator()
 
     function operationsButton(text,value)
     {
-        fc = "<div class='col-3'><div class='button' onclick='handle_operationsButton(" + value + ")'>" + text + "</div></div>";
-        
+        fc = "<div class='col-3 border border-black bg-primary text-white fs-5'><div class='button' onclick='handle_operationsButton(" + value + ")'>" + text + "</div></div>";      
         return fc;
     }
     function operationsKeypad()
     {   
         // fc=functionContent
-        fc = "<div class='container'>";
+        fc = "<div class='container border border-primary my-2'>";
             fc +="<div class='row'>";
-
             fc += operationsButton("add",0);
             fc += operationsButton("H sub D",1);
             fc += operationsButton("D sub H",2);
             fc += operationsButton("mult",3);
-               
-                
-               
-                
-               
-
             fc += "</div";
         fc += "</div>";
         return fc;
@@ -466,14 +446,11 @@ function integratedCalculator()
 
     // final assembly and output (may need a container)
     functionContent="<p>Hex output</p>";
-
     functionContent+=displayBandHex();
     functionContent+="<p>Decimal Output</p>";
     functionContent+=displayBandDecimal();
     functionContent+=hexKeyPad();
-    functionContent+=decimalKeyPad();
-   
-   
+    functionContent+=decimalKeyPad(); 
     functionContent+=operationsKeypad();
     
     outputToPage("<div class='container'>" + functionContent + "<div>");
