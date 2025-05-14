@@ -47,6 +47,42 @@ function handle_decCalcButton(button)
     
 }
 
+function addFunction()
+{
+    hexContent = document.getElementById("displayBandHex").innerText;
+    console.log("Add function, hex content is " + hexContent);
+    decContent = document.getElementById("displayBandDecimal").innerText;
+    console.log("Add function, dec content is" + decContent);
+    convertedHexIn = convertHexToDecimal(hexContent);
+    console.log("Converted hex in is " + convertedHexIn);
+    sumDec = parseInt(convertedHexIn) + parseInt(decContent);
+    sumHex = convertDecimalToHex(sumDec);
+    displayDecCalculator(sumDec);
+    displayHexCalculator(sumHex);
+}
+
+function handle_operationsButton(button)
+{
+    console.log("An operations button has been pressed the function code was " + button);
+    if (button === 0)
+    {
+        console.log("Add button has been pressed")
+        addFunction();
+    }
+    else if (button===1)
+    {
+        console.log("Hex minus decimal");
+    }
+    else if (button===2)
+    {
+        console.log("Dec minus hex");
+    }
+    else if (button===3)
+    {
+        console.log("Multiply")
+    }
+}
+
 function displayDecCalculator(newValue)
 {
     document.getElementById("displayBandDecimal").innerHTML='<p>' + newValue + '</p>';
@@ -347,6 +383,33 @@ function integratedCalculator()
         return functionContent;
     }
 
+    function operationsButton(text,value)
+    {
+        fc = "<div class='col-3'><div class='button' onclick='handle_operationsButton(" + value + ")'>" + text + "</div></div>";
+        
+        return fc;
+    }
+    function operationsKeypad()
+    {   
+        // fc=functionContent
+        fc = "<div class='container'>";
+            fc +="<div class='row'>";
+
+            fc += operationsButton("add",0);
+            fc += operationsButton("H sub D",1);
+            fc += operationsButton("D sub H",2);
+            fc += operationsButton("mult",3);
+               
+                
+               
+                
+               
+
+            fc += "</div";
+        fc += "</div>";
+        return fc;
+    }
+
 
     // final assembly and output (may need a container)
     functionContent="<p>Hex output</p>";
@@ -354,10 +417,11 @@ function integratedCalculator()
     functionContent+=displayBandHex();
     functionContent+="<p>Decimal Output</p>";
     functionContent+=displayBandDecimal();
-   
+    functionContent+=hexKeyPad();
     functionContent+=decimalKeyPad();
    
-    functionContent+=hexKeyPad();
+   
+    functionContent+=operationsKeypad();
     
     outputToPage("<div class='container'>" + functionContent + "<div>");
     displayDecCalculator(0); 
