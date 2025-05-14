@@ -47,6 +47,32 @@ function handle_decCalcButton(button)
     
 }
 
+function handle_operationsButton(button)
+{
+    console.log("An operations button has been pressed the function code was " + button);
+    if (button === 0)
+    {
+        console.log("Add button has been pressed")
+        addFunction();
+    }
+    else if (button===1)
+    {
+        console.log("Hex minus decimal");
+        hSubDFunction();
+    }
+    else if (button===2)
+    {
+        console.log("Dec minus hex");
+        dSubHFunction();
+    }
+    else if (button===3)
+    {
+        console.log("Multiply");
+        multFunction();
+    }
+}
+
+
 function addFunction()
 {
     hexContent = document.getElementById("displayBandHex").innerText;
@@ -61,27 +87,50 @@ function addFunction()
     displayHexCalculator(sumHex);
 }
 
-function handle_operationsButton(button)
+function hSubDFunction()
 {
-    console.log("An operations button has been pressed the function code was " + button);
-    if (button === 0)
-    {
-        console.log("Add button has been pressed")
-        addFunction();
-    }
-    else if (button===1)
-    {
-        console.log("Hex minus decimal");
-    }
-    else if (button===2)
-    {
-        console.log("Dec minus hex");
-    }
-    else if (button===3)
-    {
-        console.log("Multiply")
-    }
+    hexContent = document.getElementById("displayBandHex").innerText;
+    console.log("hSubDFunction, hex content is " + hexContent);
+    decContent = document.getElementById("displayBandDecimal").innerText;
+    console.log("hSubDFunction, dec content is" + decContent);
+    convertedHexIn = convertHexToDecimal(hexContent);
+    console.log("convertedHexIn is " + convertedHexIn);
+    resultDec = parseInt(convertedHexIn) - parseInt(decContent);
+    resultHex = convertDecimalToHex(resultDec);
+    displayDecCalculator(resultDec);
+    displayHexCalculator(resultHex);
 }
+
+function dSubHFunction()
+{
+    hexContent = document.getElementById("displayBandHex").innerText;
+    console.log("hSubDFunction, hex content is " + hexContent);
+    decContent = document.getElementById("displayBandDecimal").innerText;
+    console.log("hSubDFunction, dec content is" + decContent);
+    convertedHexIn = convertHexToDecimal(hexContent);
+    console.log("convertedHexIn is " + convertedHexIn);
+    resultDec =  parseInt(decContent) - parseInt(convertedHexIn);
+    resultHex = convertDecimalToHex(resultDec);
+    displayDecCalculator(resultDec);
+    displayHexCalculator(resultHex);
+}
+
+function multFunction()
+{
+    hexContent = document.getElementById("displayBandHex").innerText;
+    console.log("hSubDFunction, hex content is " + hexContent);
+    decContent = document.getElementById("displayBandDecimal").innerText;
+    console.log("hSubDFunction, dec content is" + decContent);
+    convertedHexIn = convertHexToDecimal(hexContent);
+    console.log("convertedHexIn is " + convertedHexIn);
+    resultDec =  parseInt(decContent) * parseInt(convertedHexIn);
+    resultHex = convertDecimalToHex(resultDec);
+    displayDecCalculator(resultDec);
+    displayHexCalculator(resultHex);
+
+}
+
+
 
 function displayDecCalculator(newValue)
 {
@@ -102,11 +151,15 @@ function clearDisplayValues()
 
 function clearHexBandDisplay()
 {
+    addFlag = false;
+    addTerm = 0;
     document.getElementById("displayBandHex").innerHTML="<p>$0</p>";
 }
 
 function clearDecBandDisplay()
 {
+    addFlag = false;
+    addTerm = 0;
     document.getElementById("displayBandDecimal").innerHTML="<p>0</p>";
 }
 
