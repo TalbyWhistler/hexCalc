@@ -27,13 +27,24 @@ function handle_hexCalcButton(button)
 
 function handle_decCalcButton(button)
 {
+    existingContent=document.getElementById("displayBandDecimal").innerText;
+    console.log("Existing content is " + existingContent);
     console.log("The decimal calculator button has been pressed, the value is " + button);
     if ( button === -3 )
         {
-            clearDisplayValues();
+            clearDecBandDisplay();
             return;
         }
-    displayDecCalculator(button);
+
+    if (existingContent==='0')
+    {
+        displayDecCalculator(button);
+    }
+    else 
+    {
+        displayDecCalculator(existingContent+button);
+    }
+    
 }
 
 function displayDecCalculator(newValue)
@@ -56,6 +67,11 @@ function clearDisplayValues()
 function clearHexBandDisplay()
 {
     document.getElementById("displayBandHex").innerHTML="<p>$0</p>";
+}
+
+function clearDecBandDisplay()
+{
+    document.getElementById("displayBandDecimal").innerHTML="<p>0</p>";
 }
 
 function convertDecimalToHex(inputDecimal)
