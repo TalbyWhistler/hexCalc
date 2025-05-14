@@ -48,6 +48,12 @@ function handle_decCalcButton(button)
             clearDecBandDisplay();
             return;
         }
+    else if ( button === -4 )
+    {
+        clearDecBandDisplay();
+        clearHexBandDisplay();
+        return;
+    }
 
     if (existingContent==='0')
     {
@@ -104,8 +110,9 @@ function addFunction()
     console.log("Converted hex in is " + convertedHexIn);
     sumDec = parseInt(convertedHexIn) + parseInt(decContent);
     sumHex = convertDecimalToHex(sumDec);
-    displayDecCalculator(sumDec);
-    displayHexCalculator(sumHex);
+   // displayDecCalculator(sumDec);
+   // displayHexCalculator(sumHex);
+   displayResultCalculator('H:' + sumHex + '   D:' + sumDec);
 }
 
 /**
@@ -121,8 +128,9 @@ function hSubDFunction()
     console.log("convertedHexIn is " + convertedHexIn);
     resultDec = parseInt(convertedHexIn) - parseInt(decContent);
     resultHex = convertDecimalToHex(resultDec);
-    displayDecCalculator(resultDec);
-    displayHexCalculator(resultHex);
+   // displayDecCalculator(resultDec);
+   // displayHexCalculator(resultHex);
+   displayResultCalculator('H:' + resultHex + '   D:' + resultDec);
 }
 
 /**
@@ -138,8 +146,9 @@ function dSubHFunction()
     console.log("convertedHexIn is " + convertedHexIn);
     resultDec =  parseInt(decContent) - parseInt(convertedHexIn);
     resultHex = convertDecimalToHex(resultDec);
-    displayDecCalculator(resultDec);
-    displayHexCalculator(resultHex);
+   // displayDecCalculator(resultDec);
+   // displayHexCalculator(resultHex);
+   displayResultCalculator('H:' + resultHex + '   D:' + resultDec);
 }
 
 /**
@@ -155,8 +164,9 @@ function multFunction()
     console.log("convertedHexIn is " + convertedHexIn);
     resultDec =  parseInt(decContent) * parseInt(convertedHexIn);
     resultHex = convertDecimalToHex(resultDec);
-    displayDecCalculator(resultDec);
-    displayHexCalculator(resultHex);
+   // displayDecCalculator(resultDec);
+   // displayHexCalculator(resultHex);
+   displayResultCalculator('H:' + resultHex + '   D:' + resultDec);
 }
 
 
@@ -172,6 +182,11 @@ function displayHexCalculator(newValue)
     document.getElementById("displayBandHex").innerHTML='<p>' + newValue + '</p>';
 }
 
+function displayResultCalculator(newValue)
+{
+    document.getElementById("displayBandResult").innerHTML='<p>' + newValue + '</p>';
+}
+
 function clearDisplayValues()
 {
     document.getElementById("displayBandHex").innerHTML="<p>$0</p>";
@@ -184,6 +199,7 @@ function clearHexBandDisplay()
     addFlag = false;
     addTerm = 0;
     document.getElementById("displayBandHex").innerHTML="<p>$0</p>";
+    displayResultCalculator("H:$0    D:0");;
 }
 
 function clearDecBandDisplay()
@@ -191,6 +207,7 @@ function clearDecBandDisplay()
     addFlag = false;
     addTerm = 0;
     document.getElementById("displayBandDecimal").innerHTML="<p>0</p>";
+    displayResultCalculator("H:$0    D:0");;
 }
 
 //      HEX DEX CONVERTERS    // 
@@ -326,6 +343,14 @@ function integratedCalculator()
         return functionContent;
     }   
 
+    function displayBandResult()
+    {
+        functionContent="<div class=\"container\ bg-success text-warning\ fs-3 text-end my-1 py-0\" id='displayBandResult'>";    
+        functionContent+="0";
+        functionContent+="</div>";
+        return functionContent;
+    }
+
     function hexButton(buttonText,functionInteger)
     {
         functionContent="<div class='col-3 mx-0 px-0'>";
@@ -415,6 +440,7 @@ function integratedCalculator()
         
         functionContent+=decimalButton('0',0);
         functionContent+=decimalButton('CLEAR',-3);
+        functionContent+=decimalButton('AC',-4);
         functionContent+="</div>";
         functionContent+="<div class='row'>";
         // row #4
@@ -435,8 +461,8 @@ function integratedCalculator()
         fc = "<div class='container border border-primary my-2'>";
             fc +="<div class='row'>";
             fc += operationsButton("add",0);
-            fc += operationsButton("H sub D",1);
-            fc += operationsButton("D sub H",2);
+            fc += operationsButton("H - D",1);
+            fc += operationsButton("D - H",2);
             fc += operationsButton("mult",3);
             fc += "</div";
         fc += "</div>";
@@ -445,16 +471,18 @@ function integratedCalculator()
 
 
     // final assembly and output (may need a container)
-    functionContent="<p>Hex output</p>";
-    functionContent+=displayBandHex();
-    functionContent+="<p>Decimal Output</p>";
+  //  functionContent="<p>Hex output</p>";
+    functionContent=displayBandHex();
+  //  functionContent+="<p>Decimal Output</p>";
     functionContent+=displayBandDecimal();
+    functionContent+=displayBandResult();
     functionContent+=hexKeyPad();
     functionContent+=decimalKeyPad(); 
     functionContent+=operationsKeypad();
-    
-    outputToPage("<div class='container'>" + functionContent + "<div>");
+    calculatorHeading = "<h5>HexDecimal Calculator</h5>"
+    outputToPage("<div class='container my-3 py-2 border border-black'>"+calculatorHeading + functionContent + "<div>");
     displayDecCalculator(0); 
     displayHexCalculator('$0')
+    displayResultCalculator("H:$0    D:0");
 }
 
